@@ -5,6 +5,7 @@ regions:
   # This significantly reduces the run time of nuke.
 {{range .Regions}}  - "{{.}}"
 {{end}}
+
 account-blacklist:
   - "{{ .ParentAccountID}}" # Arbitrary production account id
 
@@ -16,20 +17,67 @@ accounts:
   "{{ .ID}}": # Child Account
     filters:
       IAMPolicy:
+        # DCE resources
         - type: "contains"
           value: "{{ .PrincipalPolicy}}"
       IAMRole:
+        # DCE resources
         - "{{ .AdminRole}}"
         - "{{ .PrincipalRole}}"
+        # AWS Organizations resources
+        - type: "contains"
+          value: "OrganizationAccountAccessRole"
+        - type: "contains"
+          value: "AWSReservedSSO_AdministratorAccess*"
+        - type: "contains"
+          value: "AWSServiceRoleForGlobalAccelerator"
+        - type: "contains"
+          value: "AWSServiceRoleForOrganizations"		  
+        - type: "contains"
+          value: "AWSServiceRoleForSSO"		  
+        - type: "contains"
+          value: "AWSServiceRoleForSupport"		  
+        - type: "contains"
+          value: "AWSServiceRoleForTrustedAdvisor"
       IAMRolePolicy:
+        # DCE resources
         - type: "contains"
           value: "{{ .AdminRole}}"
         - type: "contains"
           value: "{{ .PrincipalRole}}"
         - type: "contains"
           value: "{{ .PrincipalPolicy}}"
+        - property: RoleName
+          value: "OrganizationAccountAccessRole"
+        - property: RoleName
+          value: "AWSReservedSSO_AdministratorAccess*"
+        - property: RoleName
+          value: "AWSServiceRoleForGlobalAccelerator"
+        - property: RoleName
+          value: "AWSServiceRoleForOrganizations"		  
+        - property: RoleName
+          value: "AWSServiceRoleForSSO"		  
+        - property: RoleName
+          value: "AWSServiceRoleForSupport"		  
+        - property: RoleName
+          value: "AWSServiceRoleForTrustedAdvisor"
       IAMRolePolicyAttachment:
-        # Do not remove the policy from the principal user role
+        # DCE resources
         - "{{ .PrincipalRole}} -> {{ .PrincipalPolicy}}"
         - property: RoleName
           value: "{{ .AdminRole}}"
+        # AWS Organizations resources
+        - property: RoleName
+          value: "OrganizationAccountAccessRole"
+        - property: RoleName
+          value: "AWSReservedSSO_AdministratorAccess*"
+        - property: RoleName
+          value: "AWSServiceRoleForGlobalAccelerator"
+        - property: RoleName
+          value: "AWSServiceRoleForOrganizations"		  
+        - property: RoleName
+          value: "AWSServiceRoleForSSO"		  
+        - property: RoleName
+          value: "AWSServiceRoleForSupport"		  
+        - property: RoleName
+          value: "AWSServiceRoleForTrustedAdvisor"        

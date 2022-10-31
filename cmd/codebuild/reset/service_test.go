@@ -29,7 +29,7 @@ func TestService(t *testing.T) {
 	_ = os.Setenv("RESET_NUKE_TOGGLE", "true")
 
 	// Set regions env var
-	_ = os.Setenv("RESET_NUKE_REGIONS", "us-east-1,us-west-1")
+	_ = os.Setenv("RESET_NUKE_REGIONS", "us-east-1,eu-west-1")
 
 	t.Run("getConfig", func(t *testing.T) {
 
@@ -47,7 +47,7 @@ func TestService(t *testing.T) {
 			require.Equal(t, "RESET_NUKE_TEMPLATE_DEFAULT_VAL", config.nukeTemplateDefault)
 			require.Equal(t, "RESET_NUKE_TEMPLATE_BUCKET_VAL", config.nukeTemplateBucket)
 			require.Equal(t, "RESET_NUKE_TEMPLATE_KEY_VAL", config.nukeTemplateKey)
-			require.Equal(t, []string{"us-east-1", "us-west-1"}, config.nukeRegions)
+			require.Equal(t, []string{"us-east-1", "eu-west-1"}, config.nukeRegions)
 
 			// Check computed config vals
 			require.Equal(t, "arn:aws:iam::RESET_ACCOUNT_VAL:role/RESET_ACCOUNT_ADMIN_ROLE_NAME_VAL", config.accountAdminRoleARN)

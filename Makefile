@@ -13,7 +13,7 @@ vendor:
 	go mod vendor
 
 mod:
-	-go mod init github.com/Optum/dce
+	-go mod init github.com/rismail1980/dce
 
 vet:
 	go vet
@@ -38,8 +38,8 @@ generate:
 # Before running this command, you will need
 deploy: clean build
 	cd modules && \
-	ns=$$(terraform output namespace) && \
-	bucket=$$(terraform output artifacts_bucket_name) && \
+	ns=$$(terraform output -raw namespace) && \
+	bucket=$$(terraform output -raw artifacts_bucket_name) && \
 	cd .. && \
 	./scripts/deploy.sh bin/build_artifacts.zip $${ns} $${bucket}
 

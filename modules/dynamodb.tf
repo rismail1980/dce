@@ -8,8 +8,9 @@ locals {
 
 resource "aws_dynamodb_table" "accounts" {
   name             = "Accounts${local.table_suffix}"
-  read_capacity    = var.accounts_table_rcu
-  write_capacity   = var.accounts_table_wcu
+  billing_mode     = var.accounts_table_rcu == 0 ? "PAY_PER_REQUEST" : "PROVISIONED"
+  read_capacity    = var.accounts_table_rcu == 0 ? null : var.accounts_table_rcu
+  write_capacity   = var.accounts_table_wcu == 0 ? null : var.accounts_table_wcu
   hash_key         = "Id"
   stream_enabled   = true
   stream_view_type = "NEW_AND_OLD_IMAGES"
@@ -18,8 +19,8 @@ resource "aws_dynamodb_table" "accounts" {
     name            = "AccountStatus"
     hash_key        = "AccountStatus"
     projection_type = "ALL"
-    read_capacity   = var.accounts_table_rcu
-    write_capacity  = var.accounts_table_wcu
+    read_capacity   = var.accounts_table_rcu == 0 ? null : var.accounts_table_rcu
+    write_capacity  = var.accounts_table_wcu == 0 ? null : var.accounts_table_wcu
   }
 
   server_side_encryption {
@@ -52,8 +53,9 @@ resource "aws_dynamodb_table" "accounts" {
 
 resource "aws_dynamodb_table" "leases" {
   name             = "Leases${local.table_suffix}"
-  read_capacity    = var.leases_table_rcu
-  write_capacity   = var.leases_table_wcu
+  billing_mode     = var.leases_table_rcu == 0 ? "PAY_PER_REQUEST" : "PROVISIONED"
+  read_capacity    = var.leases_table_rcu == 0 ? null : var.leases_table_rcu
+  write_capacity   = var.leases_table_wcu == 0 ? null : var.leases_table_wcu
   hash_key         = "AccountId"
   range_key        = "PrincipalId"
   stream_enabled   = true
@@ -67,24 +69,24 @@ resource "aws_dynamodb_table" "leases" {
     name            = "PrincipalId"
     hash_key        = "PrincipalId"
     projection_type = "ALL"
-    read_capacity   = var.leases_table_rcu
-    write_capacity  = var.leases_table_wcu
+    read_capacity   = var.leases_table_rcu == 0 ? null : var.leases_table_rcu
+    write_capacity  = var.leases_table_wcu == 0 ? null : var.leases_table_wcu
   }
 
   global_secondary_index {
     name            = "LeaseStatus"
     hash_key        = "LeaseStatus"
     projection_type = "ALL"
-    read_capacity   = var.leases_table_rcu
-    write_capacity  = var.leases_table_wcu
+    read_capacity   = var.leases_table_rcu == 0 ? null : var.leases_table_rcu
+    write_capacity  = var.leases_table_wcu == 0 ? null : var.leases_table_wcu
   }
 
   global_secondary_index {
     name            = "LeaseId"
     hash_key        = "Id"
     projection_type = "ALL"
-    read_capacity   = var.leases_table_rcu
-    write_capacity  = var.leases_table_wcu
+    read_capacity   = var.leases_table_rcu == 0 ? null : var.leases_table_rcu
+    write_capacity  = var.leases_table_wcu == 0 ? null : var.leases_table_wcu
   }
 
   # AWS Account ID
@@ -126,8 +128,9 @@ resource "aws_dynamodb_table" "leases" {
 
 resource "aws_dynamodb_table" "usage" {
   name             = "Usage${local.table_suffix}"
-  read_capacity    = var.usage_table_rcu
-  write_capacity   = var.usage_table_wcu
+  billing_mode     = var.usage_table_rcu == 0 ? "PAY_PER_REQUEST" : "PROVISIONED"
+  read_capacity    = var.usage_table_rcu == 0 ? null : var.usage_table_rcu
+  write_capacity   = var.usage_table_wcu == 0 ? null : var.usage_table_wcu
   hash_key         = "StartDate"
   range_key        = "PrincipalId"
   stream_enabled   = true

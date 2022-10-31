@@ -56,6 +56,9 @@ zip -j --must-match \
     bin/codebuild/reset.zip \
     bin/codebuild/reset \
     cmd/codebuild/reset/buildspec.yml \
+    cmd/codebuild/reset/pre-cleanup.sh \
+    cmd/codebuild/reset/fix-cleanup.sh \
+    cmd/codebuild/reset/post-cleanup.sh \
     cmd/codebuild/reset/default-nuke-config-template.yml
 
 # Build Lambda/CodeBuild Artifact

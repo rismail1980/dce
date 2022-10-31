@@ -74,7 +74,7 @@ variable "cloudwatch_dashboard_toggle" {
 
 variable "populate_reset_queue_schedule_expression" {
   description = "The schedule used with CloudWatch to enqueue accounts for reset."
-  default     = "rate(6 hours)" // Runs every six hours
+  default     = "rate(1 hour)" // Runs every six hours
 }
 
 variable "principal_iam_deny_tags" {

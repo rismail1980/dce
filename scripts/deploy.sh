@@ -40,6 +40,20 @@ if [[ -f "$FILE" ]]; then
           --s3-bucket ${artifactBucket} \
           --s3-key lambda/${mod_name}.zip
         
+        # Wait until Lambda Fn code is updated
+        export LAMBDA_STATE=InProgress
+        export LOOP_SLEEP_TIME=1
+        until [ "$LAMBDA_STATE" == "Successful" ] || [ $LOOP_SLEEP_TIME -gt 10 ]
+        do
+            echo "Waiting for $LOOP_SLEEP_TIME seconds to wait for code update to be finished."
+            sleep $LOOP_SLEEP_TIME
+            (( LOOP_SLEEP_TIME = LOOP_SLEEP_TIME * 2 ))
+            export LAMBDA_STATE=$(aws lambda get-function \
+                --function-name ${fn_name} \
+                --query Configuration.LastUpdateStatus \
+                --output text)
+        done
+
         # Publish new Function version
         aws lambda publish-version \
           --function-name ${fn_name}

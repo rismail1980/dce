@@ -46,6 +46,12 @@ const iamTemplate string = `
                 "arn:aws:iam::123456789012:policy/DCEPrincipalDefaultPolicy",
                 "arn:aws:iam::123456789012:role/DCEPrincipal",
                 "arn:aws:iam::123456789012:role/OrganizationAccountAccessRole"
+                "arn:aws:iam::123456789012:role/AWSReservedSSO_AdministratorAccess*"
+                "arn:aws:iam::123456789012:role/AWSServiceRoleForGlobalAccelerator"
+                "arn:aws:iam::123456789012:role/AWSServiceRoleForOrganizations"
+                "arn:aws:iam::123456789012:role/AWSServiceRoleForSSO"
+                "arn:aws:iam::123456789012:role/AWSServiceRoleForSupport"
+                "arn:aws:iam::123456789012:role/AWSServiceRoleForTrustedAdvisor"
             ]
         },
         {
@@ -90,7 +96,7 @@ const iamTemplate string = `
                 "StringEquals": {
                     "aws:RequestedRegion": [
                         "us-east-1",
-                        "us-west-1"
+                        "eu-west-1"
                     ]
                 }
             }
